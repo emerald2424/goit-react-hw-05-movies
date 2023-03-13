@@ -7,7 +7,7 @@
 // import { Loader } from 'components/Loader/Loader';
 // import { Button } from 'components/Button/Button';
 
-import { Routes, Route, NavLink } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Home } from '../pages/Home';
 import { Movies } from '../pages/Movies';
 import { MovieDetails } from 'pages/MovieDetails';

@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { fetchMovies } from 'services/fetchMovies';
 import toast from 'react-hot-toast';
 import { MovieList } from 'components/MovieList/MovieList';
-import { Layout } from 'components/Layout';
 
 export const Movies = () => {
   const [query, setQuery] = useState('');
