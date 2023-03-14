@@ -1,7 +1,7 @@
-import { MovieList } from '../components/MovieList/MovieList';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { fetchMovies } from '../services/fetchMovies';
+import { MovieListForHomePage } from 'components/MovieListForHomePage/MovieListForHomePage.js';
 
 export const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -28,7 +28,7 @@ export const Home = () => {
   return (
     <section>
       <h1>Trending today</h1>
-      {!isLoading && <MovieList movies={movies}/>}
+      {!isLoading && <MovieListForHomePage movies={movies} />}
     </section>
   );
 };

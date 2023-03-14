@@ -1,50 +1,58 @@
 // import { StyledLink } from '../components/App';
-import { identifyGenres } from 'services/identifyGenres';
-import { useParams, NavLink, Outlet } from 'react-router-dom';
-import { useEffect } from 'react';
+// import { identifyGenres } from 'services/identifyGenres';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { fetchMovies } from 'services/fetchMovies';
+import { toast } from 'react-hot-toast';
+import { MovieInfo } from 'components/MovieInfo/MovieInfo';
 
-export const MovieDetails = movie => {
-  const genres = identifyGenres([
-    {
-      id: 18,
-      name: 'Drama',
-    },
-    {
-      id: 9648,
-      name: 'Mystery',
-    },
-    {
-      id: 53,
-      name: 'Thriller',
-    },
-  ]);
-  console.log(genres);
 
+export const MovieDetails = () => {
+  // const genres = identifyGenres([
+  //   {
+  //     id: 18,
+  //     name: 'Drama',
+  //   },
+  //   {
+  //     id: 9648,
+  //     name: 'Mystery',
+  //   },
+  //   {
+  //     id: 53,
+  //     name: 'Thriller',
+  //   },
+  // ]);
+  // console.log(genres);
+
+  
+  //FETCHING A MOVIE
+  const [movie, setMovie] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const { movieId } = useParams();
-  useEffect(() => {
 
-  }, []) 
+  useEffect(() => {
+    setIsLoading(true);
+
+    fetchMovies(`movie/${movieId}?`)
+      .then(
+        data => {
+        
+        setMovie(data)
+        
+        if (!data) {
+          return toast.error('Sorry, there is nothing to match your search.');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        toast.error('Something went wrong. We could not complete your request');
+      })
+      .finally(() => setIsLoading(false));
+  }, [movieId]);
 
   return (
     <>
-      <img src={movie.poster_path} alt={movie.title} />
-      <h1>
-        {movie.title} - id:{movieId}
-      </h1>
-      <h2>Overview</h2>
-      <p>{movie.overview}</p>
-      <h2>Genres</h2>
-      <p>{movie.genres}</p>
-      <h3>Additional information</h3>
-      <ul>
-        <li>
-          <NavLink to="cast">Cast</NavLink>
-        </li>
-        <li>
-          <NavLink to="reviews">Reviews</NavLink>
-        </li>
-      </ul>
-      <Outlet />
+      {!isLoading && <MovieInfo movie={movie}/>}
     </>
-  );
-};
+  )
+}
