@@ -9,7 +9,7 @@ export const Home = () => {
 
   useEffect(() => {
     setIsLoading(true);
-
+    
     fetchMovies('trending/movie/day?')
       .then(data => {
         setMovies(data.results);
