@@ -28,7 +28,7 @@ export const MovieDetails = () => {
         toast.error('Something went wrong. We could not complete your request');
       })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [movieId]);
 
   return (
     <>
