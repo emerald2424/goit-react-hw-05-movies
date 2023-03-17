@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 export const Searchbar = ({ onSubmit }) => {
   const [q, setQ] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [setSearchParams] = useSearchParams();
   // const query = searchParams.get('query') ?? '';
   
   const handleChange = e => {
