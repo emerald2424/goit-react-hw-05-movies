@@ -4,18 +4,24 @@ import { Searchbar } from 'components/Searchbar/Searchbar';
 import { useState, useEffect } from 'react';
 import { fetchMovies } from 'services/fetchMovies';
 import toast from 'react-hot-toast';
-import { MovieList } from 'components/MovieList/MovieList';
+import MovieList from 'components/MovieList/MovieList';
+import { useSearchParams } from 'react-router-dom';
 
-export const Movies = () => {
+const Movies = () => {
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
+  const [searchParam] = useSearchParams();
+  const queryWord = searchParam.get('query')
+  
 
   useEffect(() => {
+    if (queryWord) {
+      setQuery(queryWord)
+    }
+
     if (query === '') {
       return;
     }
-
-    // setIsLoading(true);
 
     fetchMovies(`search/movie?query=${query}&`)
       .then(data => {
@@ -29,8 +35,8 @@ export const Movies = () => {
         console.log(error);
         toast.error('Something went wrong. We could not complete your request');
       });
-    // .finally(() => setIsLoading(false));
-  }, [query]);
+    
+  }, [query, queryWord]);
 
   const handleSubmit = value => {
     setQuery(value);
@@ -46,3 +52,5 @@ export const Movies = () => {
     </main>
   );
 };
+
+export default Movies;

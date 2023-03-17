@@ -1,43 +1,41 @@
 import css from './MovieInfo.module.css';
-// import { useEffect } from 'react';
+import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { getGenres } from 'services/getGenres';
-// import { getReleaseYear } from 'services/year';
+import { getGenres, getReleaseYear } from 'services/getMovieDetails';
 
-export const MovieInfo = ({movie}) => {
-    
-    const genres = getGenres(movie.genres);
-    if (movie === {}) {
-      return;
-    }
-    // console.log('movie.release_date', movie.release_date)
-    // const releaseDate = movie.release_date;
-    // console.log('releaseDate', releaseDate)
-    // const releaseYear = releaseDate.slice(0, 4)
-    // console.log(releaseYear)
 
-    // const getReleaseYear = (date) => {
-    //   return date.slice(0, 4)
-    // }
-    // const releaseYear = getReleaseYear(movie.release_date);
-    // console.log(releaseYear)
-    // const averageVote = movie.vote_average.toFixed(1);
-    
-    return (
-      <>
-      <img className={css.Poster} src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`} alt={movie.title} />
-      
-      <h1>
-        {movie.title} 
-        {/* ({releaseYear}) */}
+const MovieInfo = ({ movie }) => {
+  const genres = getGenres(movie.genres);
+
+  const {poster_path, title, release_date, vote_average, overview } = movie;
+
+  return (
+    <>
+      <div className={css.Movie}>
+        <div>
+            {poster_path && (
+            <img
+              className={css.Poster}
+              src={`https://image.tmdb.org/t/p/w342${poster_path}`}
+              alt={title}
+            />
+          )}
+        </div>
         
-      </h1>
-      <p>Release Date: {movie.release_date}</p>
-      <p>User Score: {movie.vote_average}</p>
-      <h2>Overview</h2>
-      <p>{movie.overview}</p>
-      <h2>Genres</h2>
-      <p>{genres}</p>
+        <div className={css.MovieInfo}>
+          <h1>
+            {title} (
+            {release_date && getReleaseYear(release_date)})
+          </h1>
+          <p>User Score: {vote_average}</p>
+          <h2>Overview</h2>
+          {overview && <p>{overview}</p>}
+          {overview === '' && <p>No information</p>}
+          <h2>Genres</h2>
+          <p>{genres}</p>
+        </div>
+      </div>
+
       <h3>Additional information</h3>
       <ul>
         <li>
@@ -47,8 +45,12 @@ export const MovieInfo = ({movie}) => {
           <NavLink to="reviews">Reviews</NavLink>
         </li>
       </ul>
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </>
-    )    
+  );
+};
 
-}
+
+export default MovieInfo;

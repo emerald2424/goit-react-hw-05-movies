@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { fetchMovies } from 'services/fetchMovies';
 import { toast } from 'react-hot-toast';
 
-export const Reviews = () => {
+const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { movieId } = useParams();
@@ -41,3 +41,5 @@ export const Reviews = () => {
     </>
   );
 };
+
+export default Reviews;

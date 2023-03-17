@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { fetchMovies } from 'services/fetchMovies';
 import { toast } from 'react-hot-toast';
 
-export const Cast = () => {
+const Cast = () => {
   const [cast, setCast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { movieId } = useParams();
@@ -29,19 +29,27 @@ export const Cast = () => {
   return (
     <>
       {!isLoading && (
-        <ul>
-          {cast.map(actor => (
-            <li key={actor.id}>
-              <img
-                src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                alt={actor.name}
-              />
-              <p>{actor.name}</p>
-              <p>Character: {actor.character}</p>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul>
+            {cast.map(actor => (
+              <li key={actor.id}>
+                {actor.profile_path && (<img
+                  src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                  alt={actor.name}
+                />)}
+                
+                <p>{actor.name}</p>
+                <p>Character: {actor.character}</p>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
+      {!isLoading && cast.length === 0 && (
+            <p>We do not have any information about the cast for this movie.</p>
+          )}
     </>
   );
 };
+
+export default Cast;

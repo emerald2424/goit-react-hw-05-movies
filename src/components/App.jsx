@@ -1,23 +1,13 @@
-// import { useState, useEffect } from 'react';
-
-// import { Searchbar } from './Searchbar/Searchbar';
-// import { MovieList } from './MovieList/MovieList';
-// import { toast, Toaster } from 'react-hot-toast';
-// import { fetchMovies } from 'services/fetchMovies';
-// import { Loader } from 'components/Loader/Loader';
-// import { Button } from 'components/Button/Button';
-
+import { lazy  } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Home } from '../pages/Home';
-import { Movies } from '../pages/Movies';
-import { MovieDetails } from 'pages/MovieDetails';
-import { Cast } from 'pages/Cast';
-import { Reviews } from 'pages/Reviews';
 import { SharedLayout } from './SharedLayout/SharedLayout';
-import { NotFound } from '../pages/NotFound';
 
-
-
+const Home = lazy(() => import('../pages/Home'));
+const MovieDetails = lazy(() => import('pages/MovieDetails'));
+const Movies = lazy(() => import('../pages/Movies'));
+const Cast = lazy(() => import('pages/Cast'));
+const Reviews = lazy(() => import('pages/Reviews'));
+const NotFound = lazy(() => import('../pages/NotFound'));
 
 export const App = () => {
     

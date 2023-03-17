@@ -1,23 +1,31 @@
-// import css from './Searchbar.module.css';
-// import { ImSearch } from 'react-icons/im';
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 export const Searchbar = ({ onSubmit }) => {
-  const [query, setQuery] = useState('');
-
+  const [q, setQ] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  // const query = searchParams.get('query') ?? '';
+  
   const handleChange = e => {
-    setQuery(e.target.value);
+    setQ(e.target.value)
   };
+
+  
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (!query.trim()) {
-      return toast.error('Your query is not valid');
+    setSearchParams({query: q})
+    // if (q === '') {
+    //   return setSearchParams({});
+      
+    // }
+    if (!q.trim()) {
+      return toast.error('Your query is not valid. Type something different.');
     }
-    onSubmit(query);
-    setQuery('');
+    onSubmit(q);
+    setQ('');
   };
 
   return (
@@ -29,7 +37,7 @@ export const Searchbar = ({ onSubmit }) => {
           autoComplete="off"
           autoFocus
           placeholder="Search movies"
-          value={query}
+          value={q}
           onChange={handleChange}
         />
         
@@ -41,7 +49,6 @@ export const Searchbar = ({ onSubmit }) => {
   );
 };
 
-// Searchbar.propTypes = {
-//   query: PropTypes.string.isRequired,
-//   onSubmit: PropTypes.func.isRequired,
-// };
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

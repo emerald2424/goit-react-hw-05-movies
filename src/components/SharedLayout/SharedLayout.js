@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
 import { Layout } from '../Layout';
 import { Toaster } from 'react-hot-toast';
 import styled from 'styled-components';
@@ -25,7 +26,9 @@ export const SharedLayout = () => {
       </header>
       <main>
         <Layout>
-          <Outlet />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Outlet />
+          </Suspense>
         </Layout>
       </main>
     </>

@@ -1,14 +1,18 @@
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useParams, NavLink, useLocation } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
 import { fetchMovies } from 'services/fetchMovies';
 import { toast } from 'react-hot-toast';
-import { MovieInfo } from 'components/MovieInfo/MovieInfo';
+import MovieInfo from 'components/MovieInfo/MovieInfo';
+import css from '../components/MovieInfo/MovieInfo.module.css';
+import { HiArrowLongLeft } from "react-icons/hi2";
 
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const { movieId } = useParams();
+  const location = useLocation();
+  const backLinkLocation = useRef(location.state?.from ?? "/movies")
 
   useEffect(() => {
     setIsLoading(true);
@@ -17,7 +21,7 @@ export const MovieDetails = () => {
       .then(
         data => {
         
-        setMovie(data)
+        setMovie(data);
         
         if (!data) {
           return toast.error('Sorry, there is nothing to match your search.');
@@ -29,10 +33,13 @@ export const MovieDetails = () => {
       })
       .finally(() => setIsLoading(false));
   }, [movieId]);
-
+  
   return (
     <>
-      {!isLoading && <MovieInfo movie={movie}/>}
+      <NavLink className={css.BackLink} to={backLinkLocation.current}> <HiArrowLongLeft/>Go back</NavLink>
+      {!isLoading && movie && <MovieInfo movie={movie}/>}
     </>
   )
 }
+
+export default MovieDetails;

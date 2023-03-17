@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { fetchMovies } from '../services/fetchMovies';
-import { MovieListForHomePage } from 'components/MovieListForHomePage/MovieListForHomePage.js';
+import MovieListForHomePage from 'components/MovieListForHomePage/MovieListForHomePage.js';
 
-export const Home = () => {
+const Home = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -32,3 +32,5 @@ export const Home = () => {
     </section>
   );
 };
+
+export default Home;
