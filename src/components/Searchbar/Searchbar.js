@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 
 export const Searchbar = ({ onSubmit }) => {
   const [q, setQ] = useState('');
-  const [setSearchParams] = useSearchParams();
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
   // const query = searchParams.get('query') ?? '';
   
   const handleChange = e => {
