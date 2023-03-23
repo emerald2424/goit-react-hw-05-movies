@@ -9,7 +9,9 @@ const getGenres = genreArr => {
 
 const getReleaseYear = (date) => {
   let year = "No release year";
-  year = date.slice(0, 4)
+  if (date) {
+    year = date.slice(0, 4)
+  }
   return year;
 }
 

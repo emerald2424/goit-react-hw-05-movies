@@ -27,7 +27,7 @@ const MovieInfo = ({ movie }) => {
             {title} (
             {release_date && getReleaseYear(release_date)})
           </h1>
-          {vote_average && (<p>User Score: {vote_average.toFixed(1)}</p>)}
+          <p>User Score: {vote_average && vote_average.toFixed(1)}</p>
           
           <h2>Overview</h2>
           {overview && <p>{overview}</p>}
